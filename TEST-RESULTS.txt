@@ -1,0 +1,392 @@
+YouTube 1.13.1: 270 local checks rerun; 62 real API tests compile/discover, not executed.
+
+
+=== regression ===
+PASS handle and channel tab
+PASS channel ID URL
+PASS legacy username URL
+PASS reject invalid channel: https://youtube.com.evil.com/@foo
+PASS reject invalid channel: https://example.com/@foo
+PASS reject invalid channel: https://youtube.com/c/foo
+PASS reject invalid channel: https://youtube.com/watch?v=abcdefghijk
+PASS reject invalid channel: https://youtube.com/@foo/unrelated
+PASS reject invalid channel: https://user@youtube.com/@foo
+PASS parse video: abcdefghijk
+PASS parse video: https://youtu.be/abcdefghijk?t=12
+PASS parse video: https://youtube.com/watch?x=1&v=abcdefghijk
+PASS parse video: https://youtube.com/shorts/abcdefghijk
+PASS parse video: https://youtube.com/live/abcdefghijk
+PASS reject non-YouTube video
+PASS first poll establishes silent baseline
+PASS unchanged poll does not fire
+PASS multiple discoveries in oldest-first order
+PASS no repeat after successful poll
+PASS serialized memory preserves duplicate suppression
+PASS channel change creates new baseline
+PASS API failure surfaces without success response
+PASS failure does not mutate previous memory
+PASS 125 discoveries drain across polls without loss
+PASS backlog fully drained
+PASS empty channel does not fire
+PASS newly public upload found without timestamp cutoff
+PASS unavailable metadata stays eligible for next poll
+PASS metadata indexing delay does not lose video
+PASS channel resolution API endpoint
+PASS uploads playlist extracted from channel
+PASS unknown channel produces configuration error
+PASS correct playlist endpoint and authentication
+PASS correct playlist endpoint and authentication
+PASS pagination token forwarded
+PASS API pagination and private exclusion
+PASS quota error classified and secret redacted
+PASS malformed API JSON classified
+PASS server failure classified after retries
+PASS transient server failures retried twice
+PASS video action API endpoint
+PASS video URL and metadata mapping
+PASS exactly twenty-eight SDK actions
+PASS exactly six SDK polling events
+PASS SDK splits discoveries into individual Flights
+PASS search requires channel or term before network access
+PASS reject zero maximum
+PASS reject excessive maximum
+PASS reject invalid sort
+PASS reject invalid caption filter
+PASS reject invalid duration filter
+PASS reject reversed dates
+PASS channel inventory spans pages and defaults to newest
+PASS channel-only retrieval bypasses search index
+PASS metadata hydration batches at fifty IDs
+PASS convenient collection and first-video outputs
+PASS inventory maximum reports omitted matches
+PASS exact-size inventory reports no more results
+PASS channel title sorting before limit
+PASS channel view sorting uses numeric counts
+PASS channel relevance falls back to newest
+PASS inclusive date filters and UTC dates
+PASS duration boundary: short
+PASS duration boundary: medium
+PASS duration boundary: long
+PASS channel has-captions filter
+PASS channel no-captions filter
+PASS empty search outputs are safe
+PASS keyword search restores ranking after reversed video response
+PASS global keyword search needs no channel
+PASS query operators encoded and video-only relevance requested
+PASS keyword search follows nextPageToken
+PASS channel and dropdown filters forwarded to search API
+PASS keyword dates forwarded as RFC3339 UTC
+PASS keyword filtering and lookahead report additional matches
+PASS keyword exact limit exhausts pages without false more flag
+PASS keyword default maximum is 100
+PASS deduplicate search hits and skip unavailable videos and non-video resources
+PASS short API pages do not terminate pagination prematurely
+PASS keyword results remain public only
+PASS channel keyword ceiling explicitly flagged
+PASS channel uploads retrieval bypasses 500-video ceiling
+PASS repeated search token fails explicitly
+PASS OAuth authorization code flow requests offline consent
+PASS OAuth uses SDK redirect and state without exposing client secret
+PASS missing OAuth expiry requires refresh
+PASS OAuth refresh expiry buffer
+PASS OAuth code exchange uses form credentials
+PASS OAuth stores required refresh credentials without callback data
+PASS OAuth refresh request
+PASS OAuth refresh preserves omitted refresh token and original dictionary
+PASS reject OAuth state mismatch
+PASS OAuth errors redact secrets
+PASS initial OAuth connection requires refresh token
+PASS initial OAuth connection requires management consent
+PASS OAuth revocation uses revocation endpoint
+PASS action credentials exclude client secret and refresh token
+PASS SDK application resolves both OAuth services
+PASS API-key and OAuth connection groups coexist
+PASS API-key caption access rejected before API call
+PASS API-key write rejected before API call
+PASS read source metadata and language map
+PASS add localization preserves other translations
+PASS localized update avoids source mutation and sends precondition
+PASS partial localization patch preserves title and allows explicit description clearing
+PASS new localization requires a title
+PASS translation action cannot overwrite source language
+PASS localized title length validation
+PASS localized description uses UTF-8 byte limit
+PASS missing source language requires explicit input
+PASS setting default language preserves mutable source snippet fields
+PASS source update excludes read-only properties
+PASS caption list maps status, track kind and UTC dates
+PASS caption download preserves file bytes
+PASS caption output format validation
+PASS multipart caption upload preserves timecodes and defaults to draft
+PASS caption insert uses media upload endpoint without deprecated sync
+PASS caption replacement preserves existing published status
+PASS caption draft-only update uses JSON endpoint
+PASS caption ID must belong to supplied video
+PASS caption update requires file or draft change
+PASS empty subtitle rejected
+PASS missing metadata includes incomplete translations and deduplicates language tags
+PASS caption gaps exclude ASR, drafts, failed and wrong locale
+PASS auto-generated caption coverage is opt-in
+PASS required language list cannot be empty
+PASS non-idempotent caption writes are not retried automatically
+PASS management calls authenticate by Bearer header without API-key query
+PASS default polling remains public-only with API key
+PASS public polling does not require ownership
+PASS API-key polling rejects unlisted
+PASS API-key polling rejects private
+PASS API-key polling rejects all
+PASS invalid visibility rejected before polling
+PASS invalid and unauthorized filters do not enumerate uploads
+PASS OAuth poll discovers matching unlisted uploads
+PASS ownership verified on every unlisted poll
+PASS OAuth poll discovers matching private uploads
+PASS ownership verified on every private poll
+PASS OAuth poll discovers matching all uploads
+PASS ownership verified on every all poll
+PASS new private video triggers before publication
+PASS private-to-unlisted does not trigger again
+PASS unlisted-to-public does not trigger again
+PASS temporary disappearance retains deduplication history
+PASS reappearing video does not replay
+PASS unlisted-only initial discovery triggers
+PASS leaving and re-entering selected visibility does not replay
+PASS changing visibility establishes baseline and preserves history
+PASS new upload after filter change triggers normally
+PASS serialized non-public memory preserves deduplication
+PASS legacy memory defaults to public without resetting or replaying old video
+PASS upgrade to all visibility does not backfill private history
+PASS hydrated visibility rechecked after playlist race
+PASS raced video can trigger later when it matches again
+PASS non-public backlog drains without loss or duplication
+PASS wrong owner fails instead of establishing empty baseline
+PASS ownership failure does not mutate previous memory
+PASS non-public API requests use OAuth header
+PASS owner validation uses channels mine filter
+PASS non-public API requests use OAuth header
+PASS uploads API maps all known visibility statuses
+PASS non-public API requests use OAuth header
+PASS existing channel search retains public-only inventory
+PASS real API ownership mismatch produces configuration error
+PASS visibility dropdown exposes four options
+PASS raw API rejects unsafe endpoint: https://evil.example/youtube/v3/videos
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com.evil.example/youtube/v3/videos
+PASS raw API rejects unsafe endpoint: https://user@www.googleapis.com/youtube/v3/videos
+PASS raw API rejects unsafe endpoint: http://www.googleapis.com/youtube/v3/videos
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com/drive/v3/files
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com/youtube/v3/../oauth2/token
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com/youtube/v3/%252e%252e/drive
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com:444/youtube/v3/videos
+PASS raw API rejects unsafe endpoint: https://www.googleapis.com/youtube/v3/videos#fragment
+PASS raw API rejects unsafe endpoint: https://youtubeanalytics.googleapis.com/v2/other
+PASS raw API rejects authentication query override
+PASS raw API rejects authentication query override
+PASS raw API rejects authentication query override
+PASS raw API rejects Authorization override
+PASS raw API rejects Host override
+PASS raw API rejects Cookie override
+PASS raw API rejects X-Goog-Api-Key override
+PASS raw API rejects X-HTTP-Method-Override override
+PASS raw parameters reject null values
+PASS raw headers require JSON object
+PASS raw API attaches OAuth only to approved endpoint
+PASS raw stop-on-error false returns redacted status and body
+PASS raw API attaches OAuth only to approved endpoint
+PASS raw default stop-on-error classifies API failure
+PASS uploads default to private
+PASS upload title required
+PASS upload rejects past publication date
+PASS scheduled upload requires private status
+PASS localized upload requires source language
+PASS upload initiates resumable session with notification flag
+PASS upload maps language, localized metadata, recording date and audience fields
+PASS upload session includes byte length
+PASS video bytes streamed to validated upload session
+PASS upload returns ID URL and server status
+PASS upload never forwards token or file to unexpected session host
+PASS thumbnail media upload preserves image bytes
+PASS thumbnail content type derived from signature
+PASS thumbnail result returned
+PASS thumbnail rejects non-image content
+PASS playlist insertion maps position and note
+PASS playlist URL resolves and entry ID returned
+PASS playlist negative position rejected
+PASS report uses Analytics host and report parameters
+PASS analytics output preserves columns and applies row maximum with lookahead
+PASS report rejects reversed dates
+PASS advanced search forwards all additional filter fields
+PASS search rejects invalid country code
+PASS comment polling follows full replies endpoint
+PASS comment event baselines then discovers a new reply
+PASS comment polling follows full replies endpoint
+PASS comment event suppresses duplicate replies
+PASS playlist event discovers new entry with video metadata
+PASS playlist remove-readd uses new playlist-entry identity
+PASS livestream event detects upcoming-to-live transition
+PASS livestream started event deduplicates
+PASS search event detects newly published matching video
+PASS search event deduplicates discovered video
+PASS search event does not treat old indexed content as newly uploaded
+PASS Analytics pagination advances startIndex and handles exact exhaustion
+PASS livestream transitional liveStarting state is not yet a started event
+PASS owned livestream polling uses native API and detects non-public transitions
+PASS video upload rejects API-key connection before writes
+PASS revenue report access requests optional monetary scope
+PASS RestSharp GET supplies API key
+PASS production RestSharp path deserializes typed responses
+PASS RestSharp GET supplies API key
+PASS standard BlackBirdRestClient execution uses shared transport
+PASS untrusted host blocked before RestSharp sends credentials
+PASS typed malformed response uses client error funnel
+PASS daily quota failures are not retried
+PASS caption transfer supports forward-only input without Length or seek
+PASS streaming size bound enforced without buffering
+PASS empty forward-only files are rejected
+PASS thumbnail signature validation preserves the exact byte sequence
+PASS download response disposed with owned transfer stream
+PASS unchanged playlists retain memory and skip repeated video hydration
+PASS deployment assembly embeds README documentation
+All 243 checks passed.
+
+=== upload ===
+PASS production routing starts upload through RestSharp
+PASS upload initiation retains OAuth authentication
+PASS JSON request has valid media type
+PASS JSON encoding remains UTF-8
+PASS upload session has exact declared byte count
+PASS upload session retains video MIME type
+PASS Unicode video title survives RestSharp serialization
+PASS selected upload visibility is retained
+PASS media uses the validated resumable session
+PASS streamed request has exact Content-Length
+PASS media request retains video content type
+PASS supplied MP4 sample transfers byte-for-byte through forward-only stream
+PASS public Upload video action returns created ID and URL
+PASS public action retains returned upload/visibility statuses
+PASS one session initiation, one media request and one file retrieval; no write retries
+PASS forward-only file stream is disposed after upload
+PASS POST JSON write uses valid media type
+PASS POST JSON write retains Unicode payload
+PASS POST write completes once through production RestSharp routing
+PASS PUT JSON write uses valid media type
+PASS PUT JSON write retains Unicode payload
+PASS PUT write completes once through production RestSharp routing
+PASS PATCH JSON write uses valid media type
+PASS PATCH JSON write retains Unicode payload
+PASS PATCH write completes once through production RestSharp routing
+PASS actual API quota rejection retains actionable error classification
+PASS API rejection never silently retries upload initiation
+All 27 production-transport checks passed.
+
+=== build ===
+  Apps.YouTube -> /workspace/scratch/9c203a68ed3b/YouTubeApp/src/Apps.YouTube/bin/Release/net8.0/Apps.YouTube.BrunoBitter.20261111.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:03.00
+
+=== live-build ===
+  Apps.YouTube -> /workspace/scratch/9c203a68ed3b/YouTubeApp/src/Apps.YouTube/bin/Release/net8.0/Apps.YouTube.BrunoBitter.20261111.dll
+  Tests.YouTube -> /workspace/scratch/9c203a68ed3b/YouTubeApp/tests/Tests.YouTube/bin/Release/net8.0/Tests.YouTube.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:02.93
+
+=== testlist ===
+Test run for /workspace/scratch/9c203a68ed3b/YouTubeApp/tests/Tests.YouTube/bin/Release/net8.0/Tests.YouTube.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (x64)
+
+The following Tests are available:
+    FindVideo_FindsPublicVideo
+    AddVideoToPlaylist_InsertsOwnedVideo
+    GetReport_ReadsChannelAnalytics
+    ApiRequest_ReadsOwnedChannel
+    GetLifetimeStatistics_ReadsConnectedChannelCounters
+    GetVideoStatisticsById_ReadsOwnedVideoCounters
+    GetTimeBoundMetrics_ReadsConnectedChannelSummary
+    GetTimeBoundMetrics_FiltersOwnedVideo
+    UploadCaptions_CreatesDraftTrack
+    DownloadCaptions_WritesSubtitleFile
+    UpdateCaptions_UpdatesExistingTrack
+    OnNewCommentOnChannel_FirstPollAndUnchangedPoll_AreSilent
+    OnNewCommentOnChannel_ReplyFilterChange_EstablishesNewBaseline
+    OnNewCommentOnChannel_DetectsNewReplyOnBaselinedThreadAndNewTopLevelComment
+    ValidateConnection_AcceptsValidCredentials
+    ValidateConnection_RejectsInvalidCredentials
+    ChannelPickers_ReadSelectedOAuthIdentityWithCorrectValueTypes
+    CaptionLanguagePicker_ReadsLanguagesPresentOnVideo
+    GuidedReportCatalog_RunsSelectedMonthlyPerformanceReport
+    GuidedCountryPicker_RunsCompatibleChannelReport
+    GuidedVideoFilter_RunsOwnedVideoReport
+    VideoDataHandler_FindsOwnedVideoById
+    VideoDataHandler_SearchesCurrentOwnedTitle
+    PlaylistDataHandler_FindsOwnedPlaylistById
+    LanguageDataHandler_FiltersLanguages
+    RegionDataHandler_FiltersRegions
+    CategoryDataHandler_ReadsRegionalCategories
+    PlaylistDataHandler_ReadsOwnedPlaylists
+    CaptionDataHandler_ReadsVideoTracks
+    PlaylistItemDataHandler_ReadsSelectedPlaylist
+    GetVideoLocalizations_ReadsOwnedVideo
+    UpdateVideoLocalization_PreservesSource
+    SearchCaptionTracks_FindsCreatedTrack
+    FindMissingLanguages_IdentifiesAbsentLanguage
+    OnNewVideoAdded_MultiplePublicChannels_BaselinesAndRestoresMemory
+    OnNewVideoAdded_AdditionalChannel_BaselinesOnlyNewChannel
+    OnNewVideoAdded_LegacyOwnerMemory_PreservesHistory
+    CreatePlaylist_DefaultsToPrivate
+    GetPlaylist_ReadsPlaylistMetadata
+    SearchPlaylists_FindsOwnedPlaylist
+    UpdatePlaylist_ChangesDescriptionAndPreservesTranslationsAndStatus
+    SearchPlaylistVideos_PreservesRepeatedEntries
+    RemoveVideoFromPlaylist_RemovesEntryAndPreservesVideo
+    SearchPlaylists_WithoutMatches_OutputsEmptyCollection
+    OnNewVideoAdded_OwnerAllVisibility_BaselinesSilently
+    OnNewVideoMatchingSearch_BaselinesSilently
+    OnNewVideoInPlaylist_BaselinesSilently
+    OnNewLiveStream_BaselinesOwnedChannelSilently
+    OnNewComment_BaselinesAccessibleCommentsSilently
+    UploadVideo_CreatesPrivateVideo
+    UpdateVideoThumbnail_SetsCustomThumbnail
+    GetVideoTranscript_ExplicitReadyCaption_ReturnsTextSegmentsAndFile
+    GetVideoTranscript_ExactLanguage_SelectsEligibleTrack
+    GetVideoTranscript_MissingExactLanguage_DoesNotSwitchLanguage
+    SearchVideos_FindsPublicVideos
+    GetVideo_UsesSearchResult
+    UpdateVideo_ChangesTitleAndPreservesOtherFields
+    SetVideoPublicationSettings_SchedulesPreservesAndCancels
+    SearchChannelVideos_FindsPrivateOwnedVideo
+    SearchChannelVideos_WithoutMatches_OutputsEmptyCollection
+    UpdateVideo_ClearTags_ExplicitlyRemovesAndRestoresTags
+    SetVideoPublicationSettings_RejectsPastSchedule
+
+=== Pre-fix reproduction against shipped 1.13.0 assembly ===
+System.FormatException: The format of value 'application/json; charset=utf-8' is invalid.
+   at System.Net.Http.Headers.MediaTypeHeaderValue.CheckMediaTypeFormat(String mediaType, String parameterName)
+   at System.Net.Http.StringContent..ctor(String content, Encoding encoding, String mediaType)
+   at RestSharp.RequestContent.Serialize(BodyParameter body)
+   at RestSharp.RequestContent.AddBody(Boolean hasPostParameters)
+   at RestSharp.RequestContent.BuildContent()
+   at RestSharp.RestClient.ExecuteRequestAsync(RestRequest request, CancellationToken cancellationToken)
+   at RestSharp.RestClient.ExecuteAsync(RestRequest request, CancellationToken cancellationToken)
+   at Apps.YouTube.YouTubeClient.SendAsync(HttpMethod method, String resource, Dictionary`2 parameters, HttpContent body, String etag, CancellationToken ct, Dictionary`2 headers, Boolean stopOnError, Boolean streamResponse) in /workspace/scratch/9c203a68ed3b/YouTubeApp/src/Apps.YouTube/Api/YouTubeClient.cs:line 229
+   at Program.<Main>$(String[] args) in /tmp/upload-diagnostic/Program.cs:line 8
+
+=== Contract audit ===
+{
+  "version": "1.13.1.0",
+  "actions": 28,
+  "events": 6,
+  "existingMethodsPreserved": 34,
+  "existingPropertiesPreserved": 489,
+  "dynamicHandlers": 15,
+  "videoPickerActions": 16,
+  "videoPickerInputModels": 14,
+  "oauthScopesUnchanged": true,
+  "pollingSourceUnchanged": true,
+  "appIdentityUnchanged": true
+}
