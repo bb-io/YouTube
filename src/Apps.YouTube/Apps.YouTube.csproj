@@ -7,7 +7,7 @@
     <PackageId>Blackbird.YouTube.BrunoBitter.20261111</PackageId>
     <AssemblyName>Apps.YouTube.BrunoBitter.20261111</AssemblyName>
     <Description>Discover, publish and report on YouTube content with advanced polling, video uploads, playlists, analytics, metadata localization and captions.</Description>
-    <Version>1.13.0</Version>
+    <Version>1.13.1</Version>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

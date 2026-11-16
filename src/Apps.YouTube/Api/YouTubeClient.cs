@@ -225,7 +225,7 @@ public sealed class YouTubeClient : BlackBirdRestClient
                         foreach (var header in headers)
                             rest.AddHeader(header.Key, header.Value);
                     if (body != null)
-                        rest.AddStringBody(await body.ReadAsStringAsync(timeout.Token), body.Headers.ContentType?.ToString() ?? "application/json");
+                        rest.AddStringBody(await body.ReadAsStringAsync(timeout.Token), body.Headers.ContentType?.MediaType ?? "application/json");
                     var result = await this.ExecuteAsync(rest, timeout.Token);
                     if ((int)result.StatusCode == 0)
                         throw new PluginApplicationException("YouTube could not be reached or timed out. For writes, check the current resource before retrying.");

@@ -1,16 +1,24 @@
-# YouTube 1.13.0 validation
+# YouTube 1.13.1 validation
 
-Status: release candidate. Local builds/checks completed; live Google API execution and Blackbird installation/UI/runtime validation pending. No installation was performed.
+Status: patch release candidate. No installation or real YouTube upload performed. Live Google and Blackbird runtime checks pending.
 
-## Completed locally
+## Reproduction and completed checks
 
-- App and live-test project build in Release with zero warnings/errors; warnings treated as errors. All 62 real-API tests compile/discover but have not run without credentials.
-- 525 local checks pass: 243 retained regression, 35 multi-channel, 39 picker, 50 Analytics, 79 guided UX and 79 transcript checks. Focused harnesses use simulated responses/reflection and are not a substitute for actual Google/Blackbird execution. Temporary harnesses are not shipped; logs are in TEST-RESULTS.txt.
-- Guided UX checks verify collection input/dependent-context metadata, individual options without bundles, complete-selection dependencies, valid additional metrics with an existing sort, stable trimming/deduplication/query serialization without mutating the caller, empty/null/invalid metric collections, stale sorts, ranked-video constraints and existing advanced/helper behavior.
-- Updated monthly real-API report test selects Views, Watch time in minutes and Average view duration in seconds and checks expected headers. The time-bound Analytics action internally passes a metric collection; its typed result behavior remains unchanged.
-- Compared with 1.12.0, 34 action/event method signatures and identities and 487 exported properties remain unchanged. Two exported Metrics properties intentionally change from text to collections: ReportInput.Metrics and ReportContext.Metrics. There is no scalar adapter by user decision because no existing Birds exist. Labels, requiredness, report outputs, app identity, OAuth scopes and polling source/state remain unchanged.
-- App exposes 28 actions, six multiflight events and 15 dynamic providers. Shared video picker serves 16 actions across 14 input models. No new scopes or endpoints.
-- Deployment ZIP integrity, root layout, version/dependencies, embedded README/icon, size and exclusion of tests/credentials/build intermediates checked during packaging.
+- Shipped 1.13.0 assembly reproduced a FormatException: RestSharp rejected application/json; charset=utf-8 as its media-type argument. The upload-session request never reached the simulated HTTP handler. Passing ContentType.MediaType fixes this deterministic pre-request defect; StringContent still encodes JSON as UTF-8.
+- App and 62 real-API tests build in Release with zero warnings/errors; all 62 tests are discovered but not run without credentials.
+- 243 retained regression checks pass on 1.13.1.
+- 27 focused production-routing checks pass: upload-session creation through RestSharp rather than the custom-transport branch, exact OAuth/header metadata, UTF-8 and Unicode payload, selected visibility, validated session use, exact Content-Length and MP4 bytes via forward-only stream, public Upload video output/status, file disposal and no write retries; other JSON POST/PUT/PATCH methods and quota rejection classification remain correct.
+- Total rerun for this patch: 270 local checks. Previous 1.13.0's 525-check results are historical and are not presented as a fresh full run here. Temporary focused harnesses are not shipped. Their check transcript is in TEST-RESULTS.txt; the supplied video and screenshots are excluded from deliverables.
+- Source comparison against 1.13.0 confirms only YouTubeClient.cs (media-type fix) and the project version change among app implementation files. Reflection confirms all 34 action/event signatures and 489 exported property types/nullability/labels; app identity, OAuth and polling are unchanged. Metadata audit confirms 28 actions and six events.
+- Packaging checks cover ZIP integrity/root layout, correct assembly/version/dependencies, embedded README/icon, size limit and exclusion of credentials, tests and intermediates from the deployment ZIP.
+
+## Required upload/live checks
+
+1. Update the existing custom app using YouTube-Blackbird-1.13.1.zip. Open the existing upload Bird and confirm file mapping and metadata remain unchanged. No connection/scope changes are required by this patch.
+2. Inspect channel uploads before retrying a potentially completed prior operation. Then run one authorized test upload; confirm a returned Video ID/URL, expected privacy and successful processing in YouTube Studio. Local tests do not establish live service success.
+3. Verify actual Google Drive → Blackbird File Management → YouTube file access and streaming, then any optional thumbnail flow. The focused test substitutes local file retrieval and simulated HTTP responses.
+4. Test representative JSON management writes, including Unicode text. Errors after an external write still need resource inspection before retry; no automatic upload retries were added.
+5. Existing live tests use disposable OAuth resources and may create/delete videos/captions/playlists/comments; review cleanup and avoid running the entire suite against a production channel.
 
 ## Report multi-select staging checks
 
@@ -30,7 +38,7 @@ Status: release candidate. Local builds/checks completed; live Google API execut
 
 ## Required staging/live checks
 
-1. Update the existing custom app using YouTube-Blackbird-1.13.0.zip in staging. Open old Birds and confirm requiredness, saved raw strings, metric collections, mapped IDs, outputs, connections and non-empty polling state. No external installation has been performed here.
+1. Update the existing custom app using YouTube-Blackbird-1.13.1.zip in staging. Open old Birds and confirm requiredness, saved raw strings, metric collections, mapped IDs, outputs, connections and non-empty polling state. No external installation has been performed here.
 2. Verify metric, breakdown and sort dropdowns preserve stored values. Select multiple individual metrics, inspect the collection and run supported aggregate/day/month/country queries. When changing parent values, clear incompatible child choices; the SDK does not automatically clear fields or hide them. Check custom expressions not in suggestions remain usable.
 3. Test valid and invalid monthly boundaries. Both dates must be first-of-month calendar dates; invalid values fail before Google and must not be silently rounded. Verify Pacific reporting-calendar interpretation in the actual platform mapper.
 4. Test ranked-video reports with an explicitly supported descending sort, selected metric and Google's 200-row per-request restriction. Verify live pagination/availability on representative data. All report combinations still depend on Google's table rules; advanced families are deliberately outside the curated guide.

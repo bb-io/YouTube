@@ -1,0 +1,13 @@
+{
+  "version": "1.13.1.0",
+  "actions": 28,
+  "events": 6,
+  "existingMethodsPreserved": 34,
+  "existingPropertiesPreserved": 489,
+  "dynamicHandlers": 15,
+  "videoPickerActions": 16,
+  "videoPickerInputModels": 14,
+  "oauthScopesUnchanged": true,
+  "pollingSourceUnchanged": true,
+  "appIdentityUnchanged": true
+}

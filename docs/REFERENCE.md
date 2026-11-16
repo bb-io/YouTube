@@ -1,3 +1,9 @@
+# Version 1.13.1 transport fix
+
+### Upload and JSON request fix in version 1.13.1
+
+Fixed a request-formatting defect that could make Upload video and other JSON write actions fail before reaching Google. JSON content now passes a valid media type to the HTTP library while preserving UTF-8 text. Existing inputs, outputs, scopes and upload behavior are unchanged. Update the existing app with YouTube-Blackbird-1.13.1.zip and test the same Bird. If an earlier attempt might have created a video, check the channel before retrying; uploads are not automatically retried.
+
 # YouTube implementation reference
 
 Current version: **1.12.0**. For the complete current action/event catalogue and connection setup, see [README.md](../README.md). Earlier version sections below describe the evolution of the implementation.

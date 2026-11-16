@@ -1,6 +1,6 @@
 # Blackbird.io YouTube
 
-Version **1.13.0**
+Version **1.13.1**
 
 <!-- begin docs -->
 
@@ -180,6 +180,12 @@ Deleting an OAuth connection invokes Google's token-revocation endpoint. Connect
 
 ## Additional information
 
+### Upload and JSON request fix in version 1.13.1
+
+Fixed a request-formatting defect that could make Upload video and other JSON write actions fail before reaching Google. JSON content now passes a valid media type to the HTTP library while preserving UTF-8 text. Existing inputs, outputs, scopes and upload behavior are unchanged. Update the existing app with YouTube-Blackbird-1.13.1.zip and test the same Bird. If an earlier attempt might have created a video, check the channel before retrying; uploads are not automatically retried.
+
+
+
 ### Get video transcript
 
 **Get video transcript** is a caption-based action for videos you are authorized to manage. It returns plain transcript text, timed cue segments and the downloaded WebVTT export. It does not download audio/video, perform speech recognition, translate missing languages, repair caption wording or guarantee that captions cover all speech. Google requires OAuth and permission to edit the video for caption downloads. Existing OAuth scopes are sufficient; API-key connections cannot use this action.
@@ -334,7 +340,7 @@ For feedback or implementation requests, contact your Blackbird team or use the 
 
 ## Installation and development
 
-Upload `YouTube-Blackbird-1.13.0.zip` using the existing custom app’s **New version / Update app** option. Keep the current app identity to preserve existing Birds and connections. The source ZIP is for development.
+Upload `YouTube-Blackbird-1.13.1.zip` using the existing custom app’s **New version / Update app** option. Keep the current app identity to preserve existing Birds and connections. The source ZIP is for development.
 
 Read [the detailed reference](docs/REFERENCE.md) for visibility transitions, silent baselines, quotas, search limits, caption processing and publication safeguards. Read [validation status](VALIDATION.md) before production rollout and [release notes](RELEASE-NOTES.md) for version changes.
 
