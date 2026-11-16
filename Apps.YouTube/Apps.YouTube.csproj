@@ -3,11 +3,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Product>YouTube</Product>
+    <Product>YouTube [Beta]</Product>
     <PackageId>Apps.YouTube</PackageId>
     <AssemblyName>Apps.YouTube</AssemblyName>
     <Description>Discover, publish and report on YouTube content with advanced polling, video uploads, playlists, analytics, metadata localization and captions.</Description>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -18,7 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="Tests.YouTube" />
-    <EmbeddedResource Include="image/icon.png" CopyToOutputDirectory="Always" />
     <EmbeddedResource Include="../README.md" Link="README.md" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>
