@@ -13,7 +13,7 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.6.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../../src/Apps.YouTube/Apps.YouTube.csproj" />
+    <ProjectReference Include="../Apps.YouTube/Apps.YouTube.csproj" />
     <None Update="appsettings.json" CopyToOutputDirectory="Always" />
     <None Update="TestFiles/Input/**" CopyToOutputDirectory="Always" />
   </ItemGroup>

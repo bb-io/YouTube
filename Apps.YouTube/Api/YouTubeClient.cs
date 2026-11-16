@@ -173,14 +173,14 @@ public sealed class YouTubeClient : BlackBirdRestClient
             return new PluginMisconfigurationException("Enable live streaming for this YouTube channel before using the owned-channel livestream event.");
         if (reason == "couldNotConvert")
             return new PluginMisconfigurationException("YouTube could not convert the caption track. Choose a supported format and check that the track status is serving.");
-        if (status is HttpStatusCode.BadRequest or HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
-            return new PluginMisconfigurationException(HasOAuth ? "YouTube rejected the request. Check the action inputs and reconnect with the requested management permission using the account authorized to edit this video." : "YouTube rejected the request. Check the API key, enable YouTube Data API v3, and check the key restrictions.");
         if (reason == "invalidPublishAt")
             return new PluginMisconfigurationException("Choose a future Publish at date for an already private video that has never been published. Remove the schedule to publish immediately.");
         if (reason is "invalidTitle" or "playlistTitleRequired" or "invalidDescription" or "invalidTags" or "invalidCategoryId")
             return new PluginMisconfigurationException("Check the title, description, tags and category. Choose a valid category and keep text within the documented limits.");
         if (reason is "playlistOperationUnsupported" or "playlistItemsNotAccessible")
             return new PluginMisconfigurationException("This playlist cannot be changed through the API. Choose an editable playlist owned by the connected account.");
+        if (status is HttpStatusCode.BadRequest or HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
+            return new PluginMisconfigurationException(HasOAuth ? "YouTube rejected the request. Check the action inputs and reconnect with the requested management permission using the account authorized to edit this video." : "YouTube rejected the request. Check the API key, enable YouTube Data API v3, and check the key restrictions.");
         if (status == HttpStatusCode.NotFound)
             return new PluginMisconfigurationException("The requested video, caption, playlist or playlist entry was not found or is not accessible with this connection. Check the input and channel permissions.");
         return new PluginApplicationException($"YouTube returned HTTP {(int)status}. For writes, check the current state before retrying.");
