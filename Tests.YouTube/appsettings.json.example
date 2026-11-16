@@ -1,0 +1,5 @@
+{
+  "ConnectionDefinition": {
+    "Authorization": "Bearer REPLACE_WITH_DISPOSABLE_CHANNEL_OAUTH_ACCESS_TOKEN"
+  }
+}
